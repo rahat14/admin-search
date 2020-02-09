@@ -2,109 +2,74 @@
 
 <div>
      
+     <div>
+          <h3 id = "Text">Shop Details</h3>
+           <!--  store_Id , shop_Name, shop_Details, shop_ph, shop_Adress, shop_OpenTime , shop_Image
+    ,  shop_Rank   -->
+
+          <p id = "Text">   Store ID : {{this.sid}} <br>  Store Name : {{form.shop_Name}}  <br> Store Ph : {{form.shop_ph}}
+           <br> shop_Details :{{form.shop_Details}} <br>  shop_Adress : {{form.shop_Adress}} <br>
+            shop_OpenTime : {{form.shop_OpenTime}} </p>
+
+
+
+
+     </div>
 
   <div class="addStoreFrom">
+
+
     
 
-      <h1>Add Product Page Form </h1>
+      <h3 id = "Text">Add Product Page Form </h3>
+      <br> 
     <b-form @submit="onSubmit" @reset="onReset" v-if="show" enctype="multipart/form-data" >
       <b-form-group
         id="input-group-1"
-        label="Enter The ShopName:"
+        label="Enter The Product Name:"
         label-for="input-1"
         description=""
       >
         <b-form-input
           id="input-1"
-          v-model="form.shop_Name"
+          v-model="form.product_Name"
           type="name"
           required
-          placeholder="Enter Shop Name"
+          placeholder="Enter Product Name"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Shop Details:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Product Details:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.shop_Details"
+          v-model="form.product_Details"
           required
-          placeholder="Shop Details"
+          placeholder="Product Details"
         ></b-form-input>
       </b-form-group>
 
 
 
 
- <b-form-group id="input-group-90" label="Shop Phone :" label-for="input-90">
+ <b-form-group id="input-group-90" label="Product Price :" label-for="input-90">
         <b-form-input
           id="input-90"
-          type="number"
-          v-model="form.shop_ph"
+          v-model="form.product_Price"
           required
-          placeholder="Shop Phone Number"
+          placeholder="Product Price"
         ></b-form-input>
       </b-form-group>
 
 
-      
- <b-form-group id="input-group-4" label="Shop Adress :" label-for="input-4">
-        <b-form-input
-          id="input-4"
-          v-model="form.shop_Adress"
-          required
-          placeholder="ShopAdress"
-        ></b-form-input>
-      </b-form-group>
+
 
  
 
- <b-form-group id="input-group-5" label="Search Tag : (All LowerCase)" label-for="input-5">
-        <b-form-input
-          id="input-5"
-          v-model="form.shop_Tag"
-          required
-          placeholder="Searcg Tag Ex : burger , chicken"
-        ></b-form-input>
-      </b-form-group>
-
-
-
-       <b-form-group id="input-group-6" label="Shop Time" label-for="input-6">
-        <b-form-input
-          id="input-6"
-          v-model="form.shop_OpenTime"
-          required
-          placeholder="Opening Time "
-        ></b-form-input>
-      </b-form-group>
-
-      <H4> Enter Shop Location</H4>
-
 
 <div>
-      <div id="locationDiv">
+     
 
-    <b-form-group id="input-group-7" label="" label-for="input-7">
-        <b-form-input
-          id="input-7"
-          v-model="form.shop_lat"
-          required
-          placeholder="Location Lantitude"
-        ></b-form-input>
-      </b-form-group>
-      </div>
-
-      
-      <b-form-group id="input-group-8" label="" label-for="input-8">
-        <b-form-input
-          id="input-8"
-          v-model="form.shop_long"
-          required
-          placeholder="Location Longtitude"
-        ></b-form-input>
-      </b-form-group>
-
-      <h4>Image Upload</h4>
+      <h4> Product Image Upload</h4>
 
   </div>
   <div class="field">
@@ -116,6 +81,7 @@
    <input 
         type = "file"
         ref='file'
+        required
         @change="selectFile"
         class="file-input"  />
 
@@ -165,33 +131,69 @@
 
 import axios from 'axios' ; 
 
-
+// product_Name, product_Details, product_Price, product_Image,
+//         shop_Name, shop_Details, shop_ph, shop_Adress, shop_OpenTime , shop_Image
+//     ,  shop_Rank , store_Id
    
   export default {
     data() {
+    //       <!--  store_Id , shop_Name, shop_Details, shop_ph, shop_Adress, shop_OpenTime , shop_Image
+    // ,  shop_Rank   -->
       return {
         form: {
           shop_Name: '',
           shop_Details : '',
           shop_ph: '',
           shop_Adress : '',
-          shop_Tag : '',
-          shop_loc_Category : 'kandipar',
-          shop_lat : '',
-          shop_long:'', 
-          shop_image:'',
+          product_Price:'',
+          product_Image:'',
+          shop_Rank:0,
+          shop_Id : 0, 
+          product_Name : '',
+          product_Details:'', 
+          shop_Image:'',
           shop_OpenTime : '',  
            },
-      
-            file : '',
-          show: true ,
+        sid: '',
+        file : '',
+        show: true ,
         uploading : false , 
         imageLink : ' '
 
          
       }
     },
-      components: {
+      mounted() {
+
+        this.sid = this.$route.params.pid;
+
+        axios
+      .get("http://app.bddial.com/api/allstores/" + this.sid)
+      .then(response => {
+        this.res = JSON.stringify(response.data);
+        this.Results = response.data;
+        //const obj = JSON.parse(response.data)
+
+        this.form.shop_Name = this.Results[0].store_name;
+        this.form.shop_Details = this.Results[0].store_details;
+        this.form.shop_Rank = this.Results[0].store_rank;
+        this.form.shop_ph = this.Results[0].store_ph;
+        this.form.shop_Adress = this.Results[0].store_adress;
+
+     
+      
+        this.form.shop_Id = this.Results[0].store_id ; 
+        this.form.shop_Image = this.Results[0].store_image;
+        this.form.shop_OpenTime = this.Results[0].store_open_time;
+
+        // update the pics value to load the image
+
+        this.pics = "http://app.bddial.com/public/images/" + this.form.shop_image;
+
+        //alert(JSON.stringify(this.Results))
+      });
+
+
           
         },
     methods: {
@@ -204,7 +206,7 @@ import axios from 'axios' ;
            
 
             try{
-     axios.post( 'http://localhost:3000/upload',formData,
+     axios.post( 'http://app.bddial.com/api/upload',formData,
   {
     headers: {
       
@@ -213,9 +215,9 @@ import axios from 'axios' ;
   }
 )
 .then(res =>{
-  this.form.shop_image = res.data;
+  this.form.product_Image = res.data;
 
-  alert(this.form.shop_image)
+  alert(this.form.product_Image)
 })
 .catch(function(res){
   alert('FAILURE!!' + res.data);
@@ -252,20 +254,20 @@ import axios from 'axios' ;
    // var headers = {'header1': 'application/json' }
 
     this.greet() ; 
-    axios.post('http://localhost:3000/createstore'
+    axios.post('http://app.bddial.com/api/allProducts/create-product/'
     , this.form )
     .then(function (response) {
                     currentObj.output = response.data;
                   
   
                    
-                     alert(currentObj.output + " data uploded") ; 
+                     alert(currentObj.output + "") ; 
 
                
            
 
                      // location.reload(true) ; 
-                     window.location.reload(); 
+                    window.location.reload(); 
                       
 
                   
@@ -292,7 +294,7 @@ import axios from 'axios' ;
         evt.preventDefault()
         // Reset our form values
         this.form.food = ''
-        this.form.shop_image = '' 
+        this.form.shop_Image = '' 
         this.form.shop_OpenTime = '' 
         this.form.shop_Name = ''
         // Trick to reset/clear native browser form validation state
@@ -308,6 +310,13 @@ import axios from 'axios' ;
 
 // css
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+#Text{
+ 
+   font-family: 'Montserrat', sans-serif;
+   
+}
 .addStoreFrom{
     width: 50%;
    text-align: center;

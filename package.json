@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.2.1",
     "core-js": "^3.4.4",
+    "google-fonts-webpack-plugin": "^0.4.4",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-dialog-loading": "^0.4.3",

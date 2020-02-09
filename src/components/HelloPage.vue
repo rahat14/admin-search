@@ -1,62 +1,69 @@
 <template>
-  <div id = "hellopage" class="helloPage">
+  <div id="hellopage" class="helloPage">
+    <h1   >Welcome To The Admin Panel !!!</h1>
+    <br>
+    <br>
+    <div class="addMinDiv">
+      <b-row>
+        <b-col lg="4" class="pb-2" id = "btn">
+          <b-button variant="success" v-on:click="goToStoreList">Store List</b-button>
+        </b-col>
+        
+      </b-row>
 
-  
-    <h1> Welcome To The Admin Panel !!!</h1> 
-<div>
+       <b-row>
+        
+         <b-col lg="4" class="pb-2" id = "btn">
+          <b-button variant="success" v-on:click="goToStore">Add Store</b-button>
+        </b-col>
+       
+        
+      </b-row>
 
-  <b-button variant="success" v-on:click="goToStore">Add Store</b-button>
-  <b-button variant="success" v-on:click="alerted">Add Store</b-button>
-</div>
+     
 
-  
-   
+      
+    </div>
   </div>
 </template>
 
 <script>
-
- 
-
 export default {
+  name: "HelloPage",
+  props: {},
+  methods: {
+    goToStore: function() {
+      this.$router.push("/AddStore").catch(error => {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
+    },
+    goToStoreList : function()
+    {
+      this.$router.push("/storeList").catch(error => {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
 
-  name: 'HelloPage',
-  props: {
-    
-  },
-   methods: {
-      goToStore:function(){
-
-         this.$router.push('/AddStore').catch(error => {
-  if (error.name != "NavigationDuplicated") {
-    throw error;
+    }
+    ,
+    alerted: function() {
+      alert("ne");
+    }
   }
-});
-      } , 
-      alerted:function()
-      {
-          alert('ne')
-
-      }
-
-
-
-
-}
-} 
-
-
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
- .helloPage{
-
-   color: #42b983 ; 
-   background: #0000 ; 
- }
-
+.helloPage {
+ 
+  color: #42b983;
+  background: #0000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif ;
+}
 
 h3 {
   margin: 40px 0 0;
@@ -75,4 +82,18 @@ a {
 .selector-for-some-widget {
   box-sizing: content-box;
 }
+.addMinDiv {
+ 
+  display: inline-block;
+}
+.btn{
+  width: 330px;
+  height:70px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif ; 
+  text-align: center;
+  font-size: 1.4rem ; 
+
+ 
+}
+
 </style>

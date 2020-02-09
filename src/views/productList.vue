@@ -1,16 +1,21 @@
 <template>
   <div class="container" id="app">
-    <h3 class="text-center" id = "Text">Store Listing :</h3>
+    <h3 class="text-center" id = "Text">Product Listing :</h3>
 
     <!-- SEARCH FORM -->
 <br>
-    <input v-model="searchQuery" type="text" class="input is-medium" placeholder="Search For Store" id= "Text" />
+    <!-- <input v-model="searchQuery" type="text" class="input is-medium" placeholder="Search For Store" id= "Text" /> -->
 
-    <b-button
-      class="Searchbutton is-link is-medium"
-      v-on:click="searchForData"
-      variant="success"
-    id="Text">Search</b-button>
+   
+
+                    <b-button
+                  v-on:click="goToAddProductPage" 
+               class="Searchbutton is-link is-medium"
+                 variant="success"
+              id="Text">+ Add Product</b-button>
+
+            
+
     <br>
   <br> 
 
@@ -20,58 +25,53 @@
           <!-- Loading Cards   -->
           <div class="card h-100" id="cardDiv">
             <a class="a">
-              <router-link :to="'/store-Page/' + result.store_id" class="a">
+              <!-- <router-link :to="'/store-Page/' + result.store_id" class="a"> -->
                 <div class="img-hover-zoom">
                   <img
                     class="card-img-top"
-                    :src="'http://app.bddial.com/public/images/' + result.store_image"
+                    :src="'http://app.bddial.com/public/images/' + result.product_image"
                     fluid
                     alt="card image collar"
                   />
                 </div>
 
-              </router-link>
+              <!-- </router-link> -->
             </a>
 
                 <div class="card-body d-flex flex-column align-items-start">
                   <a class="a">
-              <router-link :to="'/store-Page/' + result.store_id" class="a">
-                  <h5 class="card-title">{{result.store_name}}</h5>
-                  <p class="card-text">Store-ID : {{result.store_id}}</p>
+              <!-- <router-link :to="'/store-Page/' + result.store_id" class="a"> -->
+                  <!-- <h5 class="card-title">{{result.product_name}}</h5> -->
+                  <!-- <p class="card-text">Product-ID : {{result.product_id}}</p> -->
                   <p class="card-text">
                     <strong>Name :</strong>
-                    {{result.store_name}}
+                    {{result.product_name}}
                   </p>
                   <p class="card-text">
                     <strong>Details :</strong>
-                    {{result.store_details}}
+                    {{result.product_details}}
                   </p>
                   <p class="card-text">
-                    <strong>Phone:</strong>
-                    {{result.store_ph}}
+                    <strong>Price:</strong>
+                    {{result.product_price}}
                   </p>
                   <p class="card-text">
-                    <strong>Adress:</strong>
-                    {{result.store_adress}}
+                    <!-- <strong>Adress:</strong>
+                    {{result.store_adress}} -->
                   </p>
-                     </router-link>
+                     <!-- </router-link> -->
             </a>
             <br>
                   <div id=buttonDiv>
                        <a class="a">
-              <router-link :to="'/store-Page/' + result.store_id" class="a">
+              <!-- <router-link :to="'/store-Page/' + result.store_id" class="a"> -->
 
-                   <button class="btn btn-primary mt-auto">Go To Store</button>
+                   <button class="btn btn-primary mt-auto">Edit Product</button>
 
-              </router-link>
+              <!-- </router-link> -->
                        </a>
-
-                         
-                       <a class="a">
-                     <router-link :to="'/product-List/' + result.store_id" class="a">
-                    <button class="btn btn-primary mt-auto" id=buttonDiv v-on:click="goToProductList">Product List</button>
-                     </router-link>
-                       </a>
+                  
+                 
                   </div>
              
                 </div>
@@ -98,11 +98,15 @@ export default {
       link: "http://app.bddial.com/public/images/",
       res: "null",
       isSearching: false,
-      searchQuery: ""
+      searchQuery: "" , 
+       sid: "0"
     };
   },
   mounted() {
-    axios.get("http://app.bddial.com/api/allstores").then(response => {
+
+    this.sid = this.$route.params.pid;
+
+    axios.get("http://app.bddial.com/api/allProducts/"+ this.sid).then(response => {
       this.res = response.data; // responseing the data
       this.results = response.data; // loading the data
     });
@@ -110,8 +114,8 @@ export default {
 
   methods: {
 
-     goToProductList: function() {
-      this.$router.push("/AddStore").catch(error => {
+     goToAddProductPage: function() {
+      this.$router.push("/AddProductPage/"+ this.sid).catch(error => {
         if (error.name != "NavigationDuplicated") {
           throw error;
         }
@@ -154,6 +158,11 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
+#Text{
+ 
+   font-family: 'Montserrat', sans-serif;
+   font-weight: bold
+}
 .container{
   background-color: #ffffff;
 }
@@ -174,11 +183,7 @@ export default {
   font-size: .95rem ; 
   font-family: 'Montserrat', sans-serif;
 }
-#Text{
- 
-   font-family: 'Montserrat', sans-serif;
-   font-weight: bold
-}
+
 .card-img-top {
   width: 100%;
   height: 12vw;
@@ -224,7 +229,7 @@ export default {
   margin-top: 10px;
   width: 220px;
 }
-#buttonDiv{
+/* #buttonDiv{
   margin-left: 18px
-}
+} */
 </style>
