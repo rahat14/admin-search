@@ -54,6 +54,24 @@ const routes = [
     name: 'product-List',
     component: () => import(/* webpackChunkName: "" */ '../views/productList.vue')
 
+  }, 
+  {
+
+    path: '/add-people',
+    name: 'add-people',
+    component: () => import(/* webpackChunkName: "" */ '../views/add-people.vue')
+
+  } , 
+  {
+    path: '/peopleList',
+    name: 'peopleList',
+    component: () => import(/* webpackChunkName: "" */ '../views/peopleList.vue')
+  } , 
+  {
+   
+    path: '/peopleDetails/:pid',
+    name: 'peopleDetails',
+    component: () => import(/* webpackChunkName: "" */ '../views/peopleDetails.vue')
   }
 ]
 

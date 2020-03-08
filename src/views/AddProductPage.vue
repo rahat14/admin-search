@@ -40,12 +40,15 @@
       </b-form-group>
 
       <b-form-group id="input-group-2" label="Product Details:" label-for="input-2">
-        <b-form-input
+        <textarea
+          cols="40"
+          rows="5"
+          type="text"
           id="input-2"
           v-model="form.product_Details"
           required
           placeholder="Product Details"
-        ></b-form-input>
+        ></textarea>
       </b-form-group>
 
 
@@ -338,6 +341,11 @@ import axios from 'axios' ;
 
 margin: 15;
 
+}
+#input-2{
+  width: 100%;
+  height: 100px ;
+  text-align: center;
 }
 #uploadBtn{
 

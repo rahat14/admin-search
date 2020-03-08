@@ -19,12 +19,15 @@
         </b-form-group>
 
         <b-form-group id="input-group-2" label="Shop Details:" label-for="input-2">
-          <b-form-input
+          <textarea
+            cols="40"
+            rows="5"
+            type="text"
             id="input-2"
             v-model="form.shop_Details"
             required
             placeholder="Shop Details"
-          ></b-form-input>
+          ></textarea>
         </b-form-group>
 
         <b-form-group id="input-group-90" label="Shop Phone :" label-for="input-90">
@@ -95,7 +98,8 @@
               v-model="form.shop_long"
               required
               placeholder="Location Longtitude"
-            ></b-form-input>
+            >
+            </b-form-input>
           </b-form-group>
 
           <h4>Image Upload</h4>
@@ -258,6 +262,12 @@ export default {
   margin-top: 3%;
   margin-bottom: 3%;
 }
+#input-2{
+  width: 100%;
+  height: 100px ;
+  text-align: center;
+}
+
 #spinner {
   margin: 15;
 }

@@ -1,19 +1,22 @@
 <template>
   <div>
     <div class="storeUpdateFrom">
-      <h1>Update Store Form</h1>
+      <h1>Update People Form</h1>
 
       <h5>Product Image</h5>
 
       <div>
-        <img :src="this.pics" alt="No Image Found" width="600" height="200" />
+        <img :src="this.pics" 
+        alt="fff"
+        onerror="this.src='http://app.bddial.com/public/images/1583684219402.jpg';"
+          width="400" height="200" />
       </div>
 
       <br />
       <b-form @submit="onSubmit" @reset="onReset" v-if="show" enctype="multipart/form-data">
         <b-form-group
           id="input-group-1"
-          label="Update The ShopName:"
+          label="Update The People Name:"
           label-for="input-1"
           description
         >
@@ -22,11 +25,11 @@
             v-model="form.shop_Name"
             type="name"
             required
-            placeholder="Update Shop Name"
+            placeholder="Update People Name"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="Shop Details:" label-for="input-2">
+        <b-form-group id="input-group-2" label="People Details:" label-for="input-2">
           <textarea
             cols="40"
             rows="5"
@@ -34,36 +37,47 @@
             id="input-2"
             v-model="form.shop_Details"
             required
-            placeholder="Update Shop Details"
+            placeholder="Update People Details"
           ></textarea>
         </b-form-group>
 
-        <b-form-group id="input-group-200" label="Shop Rank:" label-for="input-200">
+         <b-form-group id="input-group-233" label="Update Service  Price :" label-for="input-2">
+          <b-form-input
+        
+            id="input-233"
+            v-model="form.shop_price"
+            required
+         
+            placeholder="Update Service  Price "
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group id="input-group-200" label="People Rank:" label-for="input-200">
           <b-form-input
             id="input-200"
             v-model="form.shop_Rank"
             type="number"
             required
-            placeholder="Update Shop Rank"
+            placeholder="100"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-90" label="Shop Phone :" label-for="input-90">
+        <b-form-group id="input-group-90" label="People Phone :" label-for="input-90">
           <b-form-input
             id="input-90"
             type="number"
             v-model="form.shop_ph"
             required
-            placeholder="Update Shop Phone Number "
+            placeholder="Update People Phone Number "
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-4" label="Shop Adress :" label-for="input-4">
+        <b-form-group id="input-group-4" label="People Adress :" label-for="input-4">
           <b-form-input
             id="input-4"
             v-model="form.shop_Adress"
             required
-            placeholder=" Update ShopAdress"
+            placeholder=" Update People Adress"
           ></b-form-input>
         </b-form-group>
 
@@ -72,20 +86,14 @@
             id="input-5"
             v-model="form.shop_Tag"
             required
+            :formatter="formatter"
             placeholder="Searcg Tag Ex : burger , chicken"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-6" label="Shop Time" label-for="input-6">
-          <b-form-input
-            id="input-6"
-            v-model="form.shop_OpenTime"
-            required
-            placeholder="Update Opening Time "
-          ></b-form-input>
-        </b-form-group>
+     
 
-        <H4>Enter Shop Location</H4>
+        <H4>Enter Updated People Location</H4>
 
         <div>
           <div id="locationDiv">
@@ -153,17 +161,16 @@ export default {
         shop_ph: "",
         shop_Adress: "",
         shop_Tag: "",
-        shop_loc_Category: "kandipar",
+        shop_price : "", 
         shop_lat: "",
         shop_long: "",
         shop_image: "",
-        shop_OpenTime: "",
         shop_Rank: "" , 
         shop_Id : ""
       },
 
       file: "",
-      pics: "https://cdn2.thecatapi.com/images/e99.jpg",
+      pics: "http://app.bddial.com/public/images/1583684219402.jpg",
       show: true,
       uploading: false,
       imageLink: " ",
@@ -175,25 +182,25 @@ export default {
     this.sid = this.$route.params.pid;
 
     axios
-      .get("http://app.bddial.com/api/allstores/" + this.sid)
+      .get("http://app.bddial.com/api/peopledb/" + this.sid)
       .then(response => {
         this.res = JSON.stringify(response.data);
         this.Results = response.data;
         //const obj = JSON.parse(response.data)
 
-        this.form.shop_Name = this.Results[0].store_name;
-        this.form.shop_Details = this.Results[0].store_details;
-        this.form.shop_Rank = this.Results[0].store_rank;
-        this.form.shop_ph = this.Results[0].store_ph;
-        this.form.shop_Adress = this.Results[0].store_adress;
-
-        this.form.shop_Tag = this.Results[0].store_tag;
-        this.form.shop_loc_Category = this.Results[0].store_loc_category;
-        this.form.shop_lat = this.Results[0].store_lat;
-        this.form.shop_Id = this.Results[0].store_id ; 
-        this.form.shop_long = this.Results[0].store_long;
-        this.form.shop_image = this.Results[0].store_image;
-        this.form.shop_OpenTime = this.Results[0].store_open_time;
+        this.form.shop_Name = this.Results[0].people_name;
+        this.form.shop_Details = this.Results[0].people_details;
+        this.form.shop_Rank = this.Results[0].people_rank;
+        this.form.shop_ph = this.Results[0].people_ph;
+        this.form.shop_Adress = this.Results[0].people_adress;
+        this.form.shop_price = this.Results[0].service_charge ; 
+        this.form.shop_Tag = this.Results[0].people_tag;
+       // this.form.shop_loc_Category = this.Results[0].people_loc_category;
+        this.form.shop_lat = this.Results[0].people_lat;
+        this.form.shop_Id = this.Results[0].people_id ; 
+        this.form.shop_long = this.Results[0].people_long;
+        this.form.shop_image = this.Results[0].people_image;
+        // this.form.shop_OpenTime = this.Results[0].store_open_time;
 
         // update the pics value to load the image
 
@@ -203,9 +210,12 @@ export default {
       });
   },
   methods: {
+       formatter(value) {
+        return value.toLowerCase()
+      },
     getImgUrl(pet) {
       var images = require.context("../assets/", false, /\.png$/);
-      return images(pet + "https://cdn2.thecatapi.com/images/e99.jpg");
+      return images(pet + "http://app.bddial.com/public/images/1583684219402.jpg");
     },
   greet: function() {
       this.$loading.show({ delay: 0, background: "#88444" });
@@ -215,11 +225,11 @@ export default {
       evt.preventDefault();
       let currentObj = this;
       this.greet() 
-      axios.post("http://app.bddial.com/api/allstores/update-store" , this.form)
+      axios.post("http://app.bddial.com/api/peopledb/update-people" , this.form)
       .then(function(response){
           currentObj.output = response.data;
 
-          alert(currentObj.output + " Data uploded");
+          alert(currentObj.output + "  Data uploded");
 
           // location.reload(true) ;
           window.location.reload();
@@ -241,7 +251,6 @@ export default {
       // Reset our form values
       this.form.food = "";
       this.form.shop_image = "";
-      this.form.shop_OpenTime = "";
       this.form.shop_Name = "";
       this.form.shop_rank = 100;
       // Trick to reset/clear native browser form validation state
@@ -297,6 +306,7 @@ export default {
   display: inline-block;
 }
 
+
 #input-group-8 {
   display: inline-block;
   margin-left: 10%;
@@ -308,11 +318,15 @@ export default {
 }
 #uploadBtn {
   display: inline;
+  overflow: hidden;
+
 }
 #input-2{
-  width: 100%;
-  height: 100px ;
-  text-align: center;
+   margin-left: 5px; 
+   width: 100%;
+   text-align: center;
+   
+
 }
 
 .submitDiv {

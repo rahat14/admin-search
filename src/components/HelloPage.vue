@@ -20,6 +20,24 @@
         
       </b-row>
 
+       <b-row>
+        
+         <b-col lg="4" class="pb-2" id = "btn">
+          <b-button variant="success" v-on:click="gotToPeople">Add People</b-button>
+        </b-col>
+       
+        
+      </b-row>
+
+       <b-row>
+        
+         <b-col lg="4" class="pb-2" id = "btn">
+          <b-button variant="success" v-on:click="gotToPeopleList">People List</b-button>
+        </b-col>
+       
+        
+      </b-row>
+
      
 
       
@@ -47,10 +65,28 @@ export default {
         }
       });
 
-    }
-    ,
+    },
+    gotToPeople : function()
+    {
+      this.$router.push("/add-people").catch(error => {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
+
+    },
     alerted: function() {
       alert("ne");
+    } , 
+
+    gotToPeopleList : function()
+    {
+       this.$router.push("/peopleList").catch(error => {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
+
     }
   }
 };
