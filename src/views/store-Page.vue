@@ -3,10 +3,10 @@
     <div class="storeUpdateFrom">
       <h1>Update Store Form</h1>
 
-      <h5>Product Image</h5>
+      <h5>Store Image</h5>
 
       <div>
-        <img :src="this.pics" alt="No Image Found" width="600" height="200" />
+        <img :src="this.pics" alt="No Image Found" width="300" height="300" />
       </div>
 
       <br />
@@ -128,9 +128,13 @@
         </div>
 
         <div>
-          <b-button class="submitDiv" type="submit" variant="primary" size="lg">Submit</b-button>
-          <b-button type="reset" variant="danger" size="lg">Reset</b-button>
+          <b-button class="submitDiv" type="submit" variant="primary" size="lg">Update The Store</b-button>
+
+           <b-button v-on:click="deleteThisStore"   variant="danger" size="lg">Delete This Store</b-button>
         </div>
+
+
+        
       </b-form>
       <b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ form }}</pre>
@@ -144,7 +148,7 @@ export default {
   data() {
     return {
       results: [],
-      link: "http://localhost:3000/images/",
+      link: "http://app.bddial.com/public/images/",
       sid: "0",
       searchQuery: "",
       form: {
@@ -203,12 +207,31 @@ export default {
       });
   },
   methods: {
+
     getImgUrl(pet) {
       var images = require.context("../assets/", false, /\.png$/);
       return images(pet + "https://cdn2.thecatapi.com/images/e99.jpg");
     },
   greet: function() {
       this.$loading.show({ delay: 0, background: "#88444" });
+    }
+    ,
+    deleteThisStore : function()
+    { 
+    
+         axios
+          .get("http://app.bddial.com/api/allstores/delete/"+ this.sid )
+          .then(response => {
+            this.res = response.data; // responseing the data
+            this.results = response.data; // loading the data
+         
+
+           alert(this.results)
+          
+            history.back() 
+          });  
+
+
     },
     onSubmit(evt) {
      // alert("fff");

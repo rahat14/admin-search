@@ -80,6 +80,24 @@
   
         </b-form-group>
 
+          <H4>Enter Shop Category</H4>
+
+        <b-form-group
+          id="input-group-3"
+          label="Shop Category : (Unchange-able)"
+          label-for="input-3"
+        >
+          <b-form-select
+            id="input-3"
+            v-model="form.shop_category"
+            :options="shop_Category"
+            required 
+            >
+         
+          </b-form-select>
+  
+        </b-form-group>
+
         <div>
           <div id="locationDiv">
             <b-form-group id="input-group-7" label label-for="input-7">
@@ -148,14 +166,23 @@ export default {
         shop_lat: "",
         shop_long: "",
         shop_image: "",
-        shop_OpenTime: ""
+        shop_OpenTime: "", 
+        shop_category : ""
       },
       loc_Category: [
         { text: "Select One", value: null },
-        "KandirPar",
-        "RaceCourse",
-        "Rajgonj"
+        "kandirPar",
+        "raceCourse",
+        "rajgonj"
       ],
+shop_Category: [
+        { text: "Select Shop Category", value: null },
+        "store",
+        "pharmecy",
+        "hardware shop"
+      ]
+
+      ,
       file: "",
       show: true,
       uploading: false,
@@ -207,6 +234,7 @@ export default {
 
       this.greet();
       axios
+      
         .post("http://app.bddial.com/api/createstore", this.form)
         .then(function(response) {
           currentObj.output = response.data;

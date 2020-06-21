@@ -27,6 +27,7 @@
       </b-form-group>
         <b-form-group
         id="input-group-1"
+         type="number"
         label="Enter The People Number:"
         label-for="input-1"
         description=""
@@ -34,7 +35,7 @@
         <b-form-input
           id="input-1"
           v-model="form.shop_ph"
-          type="name"
+          type="number"
           required
           placeholder="Enter The Number"
         ></b-form-input>
@@ -73,6 +74,7 @@
           id="input-90"
           v-model="form.service_charge"
           required
+          type="number"
           placeholder="Service Charge "
         ></b-form-input>
       </b-form-group>

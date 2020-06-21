@@ -57,9 +57,11 @@
  <b-form-group id="input-group-90" label="Product Price :" label-for="input-90">
         <b-form-input
           id="input-90"
+        
           v-model="form.product_Price"
           required
           placeholder="Product Price"
+           type="number"
         ></b-form-input>
       </b-form-group>
 
@@ -257,7 +259,7 @@ import axios from 'axios' ;
    // var headers = {'header1': 'application/json' }
 
     this.greet() ; 
-    axios.post('http://app.bddial.com/api/allProducts/create-product/'
+    axios.post('http://app.bddial.com/allProducts/create-product/'
     , this.form )
     .then(function (response) {
                     currentObj.output = response.data;

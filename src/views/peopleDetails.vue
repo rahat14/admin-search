@@ -1,15 +1,17 @@
 <template>
   <div>
     <div class="storeUpdateFrom">
-      <h1>Update People Form</h1>
+      <h3>Update People Form</h3>
+      <br>
 
-      <h5>Product Image</h5>
+
+      <h5>People Image</h5>
 
       <div>
         <img :src="this.pics" 
         alt="fff"
         onerror="this.src='http://app.bddial.com/public/images/1583684219402.jpg';"
-          width="400" height="200" />
+          width="200" height="200" />
       </div>
 
       <br />
@@ -116,7 +118,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <h4>Image Upload</h4>
+          <h4>Update The Store Image </h4>
         </div>
         <div class="field">
           <div class="file is-boxed is-primary" id="uploadBtn">
@@ -134,10 +136,10 @@
             </label>
           </div>
         </div>
-
+ 
         <div>
-          <b-button class="submitDiv" type="submit" variant="primary" size="lg">Submit</b-button>
-          <b-button type="reset" variant="danger" size="lg">Reset</b-button>
+          <b-button class="submitDiv" type="submit" variant="primary" size="lg">Update Yhis Person</b-button>
+          <b-button  variant="danger" v-on:click="deleteThisStore" size="lg">Delete This Person</b-button>
         </div>
       </b-form>
       <b-card class="mt-3" header="Form Data Result">
@@ -152,7 +154,7 @@ export default {
   data() {
     return {
       results: [],
-      link: "http://localhost:3000/images/",
+      link: "http://app.bddial.com/public/images/",
       sid: "0",
       searchQuery: "",
       form: {
@@ -212,13 +214,29 @@ export default {
   methods: {
        formatter(value) {
         return value.toLowerCase()
-      },
+      }, 
     getImgUrl(pet) {
       var images = require.context("../assets/", false, /\.png$/);
       return images(pet + "http://app.bddial.com/public/images/1583684219402.jpg");
     },
   greet: function() {
       this.$loading.show({ delay: 0, background: "#88444" });
+    },deleteThisStore : function()
+    { 
+    
+         axios
+          .get("http://app.bddial.com/api/peopledb/delete/"+ this.sid )
+          .then(response => {
+            this.res = response.data; // responseing the data
+            this.results = response.data; // loading the data
+         
+
+           alert(this.results)
+          
+            history.back() 
+          });  
+
+
     },
     onSubmit(evt) {
      // alert("fff");
